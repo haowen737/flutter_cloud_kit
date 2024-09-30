@@ -97,3 +97,20 @@ func recordToDictionary(record: CKRecord) -> Dictionary<String, Any?> {
     dictionary["record"] = recordDictionary;
     return dictionary;
 }
+
+func createCKRecordFromArgs(arguments: [String: Any]) -> CKRecord? {
+    guard let recordType = arguments["recordType"] as? String,
+          let fields = arguments["fields"] as? [String: Any] else {
+        return nil
+    }
+    
+    let recordName = arguments["recordName"] as? String
+    let recordID = recordName != nil ? CKRecord.ID(recordName: recordName!) : CKRecord.ID()
+    let record = CKRecord(recordType: recordType, recordID: recordID)
+    
+    for (key, value) in fields {
+        record[key] = value as? CKRecordValue
+    }
+    
+    return record
+}

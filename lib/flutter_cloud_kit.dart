@@ -78,4 +78,25 @@ class FlutterCloudKit {
     return FlutterCloudKitPlatform.instance.deleteRecord(
         containerId: containerId, scope: scope, recordName: recordName);
   }
+
+  /// Saves multiple records to a CloudKit database of the provided [scope].
+  /// Each record in the [records] list should be a map containing 'recordType',
+  /// 'fields', and optionally 'recordName'.
+  /// Returns a list of saved record IDs.
+  Future<List<String>> saveRecords({
+    required CloudKitDatabaseScope scope,
+    required List<Map<String, dynamic>> records,
+  }) async {
+    for (var record in records) {
+      validateCloudKitIdentifier(record['recordType'] as String);
+      (record['fields'] as Map<String, dynamic>)
+          .keys
+          .forEach(validateCloudKitIdentifier);
+    }
+    return FlutterCloudKitPlatform.instance.saveRecords(
+      containerId: containerId,
+      scope: scope,
+      records: records,
+    );
+  }
 }

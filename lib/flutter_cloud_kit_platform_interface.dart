@@ -59,4 +59,12 @@ abstract class FlutterCloudKitPlatform extends PlatformInterface {
       required String recordName}) {
     throw UnimplementedError('deleteRecord() has not been implemented.');
   }
+
+  Future<List<String>> saveRecords({
+    required String? containerId,
+    required CloudKitDatabaseScope scope,
+    required List<Map<String, dynamic>> records,
+  }) {
+    throw UnimplementedError('saveRecords() has not been implemented.');
+  }
 }
