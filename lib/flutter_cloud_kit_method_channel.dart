@@ -23,6 +23,25 @@ class MethodChannelFlutterCloudKit extends FlutterCloudKitPlatform {
   }
 
   @override
+  Future<List<String>> saveRecords({
+    String? containerId,
+    required CloudKitDatabaseScope scope,
+    required List<Map<String, dynamic>> records,
+  }) async {
+    var args = {
+      'databaseScope': scope.name,
+      'records': records,
+    };
+    if (containerId != null) {
+      args['containerId'] = containerId;
+    }
+
+    List<Object?> result =
+        await methodChannel.invokeMethod('saveRecords', args);
+    return result.cast<String>();
+  }
+
+  @override
   Future<void> saveRecord(
       {String? containerId,
       required CloudKitDatabaseScope scope,
